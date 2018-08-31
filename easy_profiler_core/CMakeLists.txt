@@ -327,6 +327,7 @@ install(
 
 install(
     EXPORT "${targets_export_name}"
+    NAMESPACE "easy_profiler::"
     DESTINATION "${config_install_dir}"
 )
 
