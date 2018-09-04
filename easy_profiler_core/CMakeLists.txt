@@ -240,6 +240,7 @@ easy_define_target_option(easy_profiler EASY_OPTION_PREDEFINED_COLORS EASY_OPTIO
 if (UNIX)
     target_compile_options(easy_profiler PRIVATE -Wall -Wno-long-long -Wno-reorder -Wno-braced-scalar-init -pedantic)
     if (NOT ANDROID AND NOT QNX)
+    	#Android uses bionic which has its own implementation of pthread
         target_link_libraries(easy_profiler pthread)
     endif()
     if (QNX)
@@ -258,6 +259,20 @@ if (MSVC)
     target_compile_options(easy_profiler PRIVATE /WX)
 endif ()
 
+if (APPLE)
+    target_compile_options(easy_profiler PUBLIC -std=gnu++11)
+else ()
+    if (CMAKE_VERSION VERSION_LESS "3.1")
+        if (NOT MSVC AND NOT ANDROID)
+            target_compile_options(easy_profiler PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++11>)
+        endif ()
+    else ()
+        if (NOT MSVC AND NOT ANDROID)
+            target_compile_options(easy_profiler PUBLIC -std=gnu++11)
+        endif ()
+        set_target_properties(easy_profiler PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
+    endif ()
+endif ()
 # End adding platform specific compile options.
 ###############################################################################
 
