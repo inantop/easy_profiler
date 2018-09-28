@@ -22,7 +22,6 @@ if (NOT WIN32)
             set(NO_CXX11_THREAD_LOCAL_SUPPORT TRUE)
         endif ()
     endif ()
-
     # TODO: Check thread_local keyword support for other compilers for Unix
 
     if (NO_CXX11_THREAD_LOCAL_SUPPORT)
