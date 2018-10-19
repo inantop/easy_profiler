@@ -79,6 +79,7 @@
 #include <QSignalBlocker>
 #include <QSplitter>
 #include <QWheelEvent>
+#include <QWindow>
 
 #include "arbitrary_value_tooltip.h"
 #include "blocks_graphics_view.h"
@@ -2298,6 +2299,10 @@ void BlocksGraphicsView::onIdleTimeout()
     decltype(scenePos) pos(m_offset + scenePos.x() / m_scale, scenePos.y());
 
     // Try to select one of context switches or items
+    if (!window()->isActiveWindow()) {
+        return;
+    }
+
     for (auto item : m_items)
     {
         auto cse = item->intersectEvent(pos);
@@ -3114,6 +3119,10 @@ void ThreadNamesWidget::onIdleTimeout()
 
     if (m_popupWidget != nullptr)
         return;
+
+    if (!window()->isActiveWindow()) {
+        return;
+    }
 
     if (window() == nullptr || !window()->isActiveWindow())
         return;
