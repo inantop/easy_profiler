@@ -935,7 +935,7 @@ uint32_t ProfileManager::dumpBlocksToStream(std::ostream& _outputStream, bool _l
     // This is much better than inserting spin-lock or atomic variable store/load into each storeBlock operation.
     //
     // Note: this means - wait for all ThreadStorage::storeBlock() to finish.
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
     // This is to make sure that no new descriptors or new threads will be
     // added until we finish sending data.
